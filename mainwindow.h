@@ -34,6 +34,8 @@ private slots:
 
     void on_length_currentIndexChanged(int index);
 
+    void on_error_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
     probes *probe;

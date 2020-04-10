@@ -9,6 +9,10 @@ Atributos:
 			Temperatura
 			Error de Sonda
 			Longitud de sonda
+			Tipo de sonda (Puede Ser Master o Slave)
+
+Sonda Master: Envia por el puerto serie el status de sus atributos cada un tiempo default.
+Sonda Slave: Envia por el puerto serie el status de sus atributos luego de ser consultado por el puerto serie.
 
 
 Desarrollo
