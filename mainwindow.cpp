@@ -40,6 +40,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->error->addItem("Comm Error");
     // Inicializo estado de error de sonda
     probe->setErrorStatus(NO_ERROR);
+
+    // Inicializo el checkbox del tipo de sonda como MASTER
+    ui->typeMaster->setChecked(true);
+    ui->typeSlave->setChecked(false);
+    // Inicializo el tipo de sonda como MASTER
+    probe->setProbeType(MASTER);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -112,5 +120,31 @@ void MainWindow::on_error_currentIndexChanged(int index)
     default:
         ui->errorStatusShowLabel->setText("<font color='green'>No Error</font>");
         break;
+    }
+}
+
+void MainWindow::on_typeMaster_clicked()
+{
+    if((ui->typeSlave->isChecked()) && (ui->typeMaster->isChecked()))
+    {
+        ui->typeSlave->setChecked(false);
+        probe->setProbeType(MASTER);
+    }
+    else if((!ui->typeSlave->isChecked()) && (ui->typeMaster->isChecked()))
+    {
+        probe->setProbeType(MASTER);
+    }
+}
+
+void MainWindow::on_typeSlave_clicked()
+{
+    if((ui->typeSlave->isChecked()) && (ui->typeMaster->isChecked()))
+    {
+        ui->typeMaster->setChecked(false);
+        probe->setProbeType(SLAVE);
+    }
+    else if((ui->typeSlave->isChecked()) && (!ui->typeMaster->isChecked()))
+    {
+        probe->setProbeType(SLAVE);
     }
 }

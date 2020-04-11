@@ -36,6 +36,10 @@ private slots:
 
     void on_error_currentIndexChanged(int index);
 
+    void on_typeMaster_clicked();
+
+    void on_typeSlave_clicked();
+
 private:
     Ui::MainWindow *ui;
     probes *probe;
