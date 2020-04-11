@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>794</width>
+    <width>631</width>
     <height>334</height>
    </rect>
   </property>
@@ -195,10 +195,10 @@
    <widget class="QGroupBox" name="probeConfiguration">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>20</y>
-      <width>181</width>
-      <height>101</height>
+      <x>330</x>
+      <y>30</y>
+      <width>281</width>
+      <height>121</height>
      </rect>
     </property>
     <property name="title">
@@ -235,12 +235,50 @@
       <string>Length</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="typeMaster">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>80</y>
+       <width>81</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Master</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="typeSlave">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>80</y>
+       <width>81</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Slave</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="ErrorSimulator">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>140</y>
+      <x>330</x>
+      <y>160</y>
       <width>281</width>
       <height>111</height>
      </rect>
@@ -328,7 +366,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>794</width>
+     <width>631</width>
      <height>21</height>
     </rect>
    </property>

@@ -101,7 +101,7 @@ void MainWindow::on_error_currentIndexChanged(int index)
     switch(index)
     {
     case NO_ERROR:
-                ui->errorStatusShowLabel->setText("<font color='green'>No Error</font>");
+        ui->errorStatusShowLabel->setText("<font color='green'>No Error</font>");
         break;
     case INTERNAL_ERROR:
         ui->errorStatusShowLabel->setText("<font color='red'>Internal Error</font>");
