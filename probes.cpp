@@ -1,7 +1,7 @@
 #include "probes.h"
 
 // Metodo Constructor
-probes::probes(float waterLevel_, float productLevel_, float temperature_, char errorStatus_, int probeLength_, bool probeType_)
+probes::probes(float waterLevel_, float productLevel_, float temperature_, char errorStatus_, int probeLength_, bool probeType_, int id_)
 {
     waterLevel   = waterLevel_;
     productLevel = productLevel_;
@@ -9,6 +9,7 @@ probes::probes(float waterLevel_, float productLevel_, float temperature_, char 
     errorStatus  = errorStatus_;
     probeLength  = probeLength_;
     probeType    = probeType_;
+    id           = id_;
 }
 
 // Metodo Destructor
@@ -48,6 +49,11 @@ void probes::setProbeType(bool probeType_)
     probeType = probeType_;
 }
 
+void probes::setProbeId(int id_)
+{
+    id = id_;
+}
+
 // Metodo Constructor: Getters
 float probes::getWaterLevel(void)
 {
@@ -77,4 +83,9 @@ int probes::getProbeLength()
 bool probes::getProbeType()
 {
     return(probeType);
+}
+
+int probes::getProbeId()
+{
+    return(id);
 }

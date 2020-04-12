@@ -40,6 +40,8 @@ private slots:
 
     void on_typeSlave_clicked();
 
+    void on_id_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
     probes *probe;

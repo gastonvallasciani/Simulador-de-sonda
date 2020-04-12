@@ -8,6 +8,8 @@
 #define MASTER           0
 #define SLAVE            1
 
+#define ID_MAX           18
+
 class probes
 {
 // Atributos
@@ -18,10 +20,11 @@ private:
     char  errorStatus  = NO_ERROR;
     int   probeLength  = 1000;
     bool  probeType    = MASTER;
+    int   id           = 0;
 // Metodos
 public:
 // Constructor
-    probes(float waterLevel_, float productLevel_, float temperature_, char errorStatus_, int probeLength_, bool probeType_);
+    probes(float waterLevel_, float productLevel_, float temperature_, char errorStatus_, int probeLength_, bool probeType_, int id_);
 // Destructor
     ~probes();
 // Setters
@@ -31,6 +34,7 @@ public:
     void setErrorStatus(char errorStatus_);
     void setProbeLength(int probeLength_);
     void setProbeType(bool probeType_);
+    void setProbeId(int id_);
 // Getters
     float getWaterLevel(void);
     float getProductLevel(void);
@@ -38,6 +42,7 @@ public:
     char getErrorStatus(void);
     int getProbeLength(void);
     bool getProbeType(void);
+    int getProbeId(void);
 };
 
 #endif // PROBES_H

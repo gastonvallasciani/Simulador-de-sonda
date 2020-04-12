@@ -47,7 +47,13 @@ MainWindow::MainWindow(QWidget *parent)
     // Inicializo el tipo de sonda como MASTER
     probe->setProbeType(MASTER);
 
-
+    // Inicializo configurador de id de sonda
+    for (int i = 0; i < ID_MAX; i++)
+    {
+        ui->id->addItem(QString::number(i + 1));
+    }
+    // Inicializo el id de sonda
+    probe->setProbeId(1);
 }
 
 MainWindow::~MainWindow()
@@ -147,4 +153,9 @@ void MainWindow::on_typeSlave_clicked()
     {
         probe->setProbeType(SLAVE);
     }
+}
+
+void MainWindow::on_id_currentIndexChanged(int index)
+{
+    probe->setProbeId(index);
 }
