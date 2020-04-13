@@ -198,7 +198,7 @@
       <x>330</x>
       <y>20</y>
       <width>281</width>
-      <height>121</height>
+      <height>131</height>
      </rect>
     </property>
     <property name="title">
@@ -238,7 +238,7 @@
     <widget class="QCheckBox" name="typeMaster">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>40</x>
        <y>80</y>
        <width>81</width>
        <height>17</height>
@@ -251,15 +251,15 @@
       </font>
      </property>
      <property name="text">
-      <string>Master</string>
+      <string>Wired</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="typeSlave">
      <property name="geometry">
       <rect>
-       <x>190</x>
+       <x>160</x>
        <y>80</y>
-       <width>81</width>
+       <width>101</width>
        <height>17</height>
       </rect>
      </property>
@@ -270,7 +270,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Slave</string>
+      <string>Wireless</string>
      </property>
     </widget>
     <widget class="QLabel" name="idLabel">
@@ -402,7 +402,14 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

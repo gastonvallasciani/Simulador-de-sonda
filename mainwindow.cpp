@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->typeMaster->setChecked(true);
     ui->typeSlave->setChecked(false);
     // Inicializo el tipo de sonda como MASTER
-    probe->setProbeType(MASTER);
+    probe->setProbeType(WIRED);
 
     // Inicializo configurador de id de sonda
     for (int i = 0; i < ID_MAX; i++)
@@ -134,11 +134,11 @@ void MainWindow::on_typeMaster_clicked()
     if((ui->typeSlave->isChecked()) && (ui->typeMaster->isChecked()))
     {
         ui->typeSlave->setChecked(false);
-        probe->setProbeType(MASTER);
+        probe->setProbeType(WIRED);
     }
     else if((!ui->typeSlave->isChecked()) && (ui->typeMaster->isChecked()))
     {
-        probe->setProbeType(MASTER);
+        probe->setProbeType(WIRED);
     }
 }
 
@@ -147,11 +147,11 @@ void MainWindow::on_typeSlave_clicked()
     if((ui->typeSlave->isChecked()) && (ui->typeMaster->isChecked()))
     {
         ui->typeMaster->setChecked(false);
-        probe->setProbeType(SLAVE);
+        probe->setProbeType(WIRELESS);
     }
     else if((ui->typeSlave->isChecked()) && (!ui->typeMaster->isChecked()))
     {
-        probe->setProbeType(SLAVE);
+        probe->setProbeType(WIRELESS);
     }
 }
 

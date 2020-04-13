@@ -5,8 +5,8 @@
 #define INTERNAL_ERROR   1
 #define COMM_ERROR       2
 
-#define MASTER           0
-#define SLAVE            1
+#define WIRED           0
+#define WIRELESS        1
 
 #define ID_MAX           18
 
@@ -19,7 +19,7 @@ private:
     float temperature  = 0;
     char  errorStatus  = NO_ERROR;
     int   probeLength  = 1000;
-    bool  probeType    = MASTER;
+    bool  probeType    = WIRED;
     int   id           = 0;
 // Metodos
 public:
