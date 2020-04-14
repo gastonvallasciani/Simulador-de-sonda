@@ -54,6 +54,8 @@ MainWindow::MainWindow(QWidget *parent)
     }
     // Inicializo el id de sonda
     probe->setProbeId(1);
+
+    probe->setProbeBrand(GENERIC);
 }
 
 MainWindow::~MainWindow()
@@ -110,9 +112,9 @@ void MainWindow::on_length_currentIndexChanged(int index)
 
 void MainWindow::on_error_currentIndexChanged(int index)
 {
-    probe->setErrorStatus(index);
+    probe->setErrorStatus((probeError_t)index);
 
-    switch(index)
+    switch((probeError_t)index)
     {
     case NO_ERROR:
         ui->errorStatusShowLabel->setText("<font color='green'>No Error</font>");
