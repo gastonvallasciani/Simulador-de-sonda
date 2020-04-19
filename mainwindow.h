@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSerialPort>
+#include "settingsdialog.h"
 #include "probes.h"
 
 QT_BEGIN_NAMESPACE
@@ -27,9 +29,7 @@ public:
 private slots:
 
     void on_prodSlider_valueChanged(int value);
-
     void on_waterSlider_valueChanged(int value);
-
     void on_tempSlider_valueChanged(int value);
 
     void on_length_currentIndexChanged(int index);
@@ -37,13 +37,25 @@ private slots:
     void on_error_currentIndexChanged(int index);
 
     void on_typeMaster_clicked();
-
     void on_typeSlave_clicked();
 
     void on_id_currentIndexChanged(int index);
 
+    void on_ConnectButton_clicked();
+    void on_DisconnectButton_clicked();
+    void on_ConfigureButton_clicked();
+    void writeData(const QByteArray &data);
+    void readData();
+
+    void handleError(QSerialPort::SerialPortError error);
+
+private:
+    void initProbe(void);
+
 private:
     Ui::MainWindow *ui;
-    probes *probe;
+    SettingsDialog *m_settings = nullptr;
+    QSerialPort    *m_serial   = nullptr;
+    probes         *probe;
 };
 #endif // MAINWINDOW_H

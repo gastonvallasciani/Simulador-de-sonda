@@ -1,65 +1,72 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "settingsdialog.h"
+#include "probes.h"
+
+
 #include <QString>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow),
+      m_settings(new SettingsDialog),
+      m_serial(new QSerialPort(this))
 {
     ui->setupUi(this);
+
+    m_settings->setModal(true);
+
+    ui->ConnectButton->setEnabled(true);
+    ui->DisconnectButton->setEnabled(false);
+    ui->ConfigureButton->setEnabled(true);
 
     // Inicializo configurador de nivel de producto de sonda
     ui->prodShowLabel->setText(QString("= %1%2").arg("0").arg(" mm"));
     ui->prodSlider->setRange(0, 1000);
-    // Inicializo nivel de producto de sonda
-    probe->setProductLevel(0);
 
     // Inicializo configurador de nivel de agua de sonda
     ui->waterShowLabel->setText(QString("= %1%2").arg("0").arg(" mm"));
     ui->waterSlider->setRange(0, 1000);
-    // Inicializo nivel de agua de sonda
-    probe->setWaterLevel(0);
 
     // Inicializo configurador de temperatura de sonda
     ui->tempShowLabel->setText(QString("= %1%2").arg("15").arg(" °C"));
     ui->tempSlider->setRange(-30, 70);
-    // Inicializo temperatura de sonda
-    probe->setTemperature(15);
 
     // Inicializo configurador de longitud de la sonda
     ui->length->addItem(QString("1000 mm"));
     ui->length->addItem(QString("1200 mm"));
     ui->length->addItem(QString("1500 mm"));
     ui->length->addItem(QString("2000 mm"));
-    // Inicializo longitud de sonda
-    probe->setProbeLength(1000);
 
     // Inicializo configurador de error de sonda
     ui->error->addItem("No Error");
     ui->error->addItem("Internal Error");
     ui->error->addItem("Comm Error");
-    // Inicializo estado de error de sonda
-    probe->setErrorStatus(NO_ERROR);
 
     // Inicializo el checkbox del tipo de sonda como MASTER
     ui->typeMaster->setChecked(true);
     ui->typeSlave->setChecked(false);
-    // Inicializo el tipo de sonda como MASTER
-    probe->setProbeType(WIRED);
 
     // Inicializo configurador de id de sonda
     for (int i = 0; i < ID_MAX; i++)
     {
         ui->id->addItem(QString::number(i + 1));
     }
-    // Inicializo el id de sonda
-    probe->setProbeId(1);
 
-    probe->setProbeBrand(GENERIC);
+    ui->portStatusShowLablel->setText("<font color='red'>Disconnected</font>");
+
+    initProbe();
+
+    connect(m_serial, &QSerialPort::errorOccurred, this, &MainWindow::handleError);
+    connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
+    //connect(m_console, &Console::getData, this, &MainWindow::writeData);
+
 }
 
 MainWindow::~MainWindow()
 {
+    delete m_settings;
     delete ui;
 }
 
@@ -160,4 +167,91 @@ void MainWindow::on_typeSlave_clicked()
 void MainWindow::on_id_currentIndexChanged(int index)
 {
     probe->setProbeId(index);
+}
+
+void MainWindow::on_ConnectButton_clicked()
+{
+    const SettingsDialog::Settings p = m_settings->settings();
+    m_serial->setPortName(p.name);
+    m_serial->setBaudRate(p.baudRate);
+    m_serial->setDataBits(p.dataBits);
+    m_serial->setParity(p.parity);
+    m_serial->setStopBits(p.stopBits);
+    m_serial->setFlowControl(p.flowControl);
+    if (m_serial->open(QIODevice::ReadWrite))
+    {
+        ui->ConnectButton->setEnabled(false);
+        ui->DisconnectButton->setEnabled(true);
+        ui->ConfigureButton->setEnabled(false);
+        ui->portStatusShowLablel->setText("<font color='green'>Connected</font>");
+        ui->portNumberShowLablel->setText(p.name);
+    }
+    else
+    {
+        QMessageBox::critical(this, tr("Error"), m_serial->errorString());
+    }
+}
+
+void MainWindow::on_DisconnectButton_clicked()
+{
+    if (m_serial->isOpen())
+    {
+        m_serial->close();
+    }
+    ui->portStatusShowLablel->setText("<font color='red'>Disconnected</font>");
+    ui->ConnectButton->setEnabled(true);
+    ui->DisconnectButton->setEnabled(false);
+    ui->ConfigureButton->setEnabled(true);
+    ui->portNumberShowLablel->setText("");
+}
+
+void MainWindow::on_ConfigureButton_clicked()
+{
+    m_settings->show();
+    //ui->ConfigureButton->setEnabled(false);
+}
+
+void MainWindow::writeData(const QByteArray &data)
+{
+    m_serial->write(data);
+}
+
+void MainWindow::readData()
+{
+    const QByteArray data = m_serial->readAll();
+}
+
+void MainWindow::handleError(QSerialPort::SerialPortError error)
+{
+    if (error == QSerialPort::ResourceError) {
+        QMessageBox::critical(this, tr("Critical Error"), m_serial->errorString());
+        on_DisconnectButton_clicked();
+    }
+}
+
+void MainWindow::initProbe(void)
+{
+    // Inicializo nivel de producto de sonda
+    probe->setProductLevel(0);
+
+    // Inicializo nivel de agua de sonda
+    probe->setWaterLevel(0);
+
+    // Inicializo temperatura de sonda
+    probe->setTemperature(15);
+
+    // Inicializo longitud de sonda
+    probe->setProbeLength(1000);
+
+    // Inicializo estado de error de sonda
+    probe->setErrorStatus(NO_ERROR);
+
+    // Inicializo el tipo de sonda como MASTER
+    probe->setProbeType(WIRED);
+
+    // Inicializo el id de sonda
+    probe->setProbeId(1);
+
+    // Inicializo la marca de la sonda
+    probe->setProbeBrand(GENERIC);
 }

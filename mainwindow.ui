@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>631</width>
-    <height>314</height>
+    <width>643</width>
+    <height>438</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QGroupBox" name="valueSimulator">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>330</x>
       <y>20</y>
       <width>301</width>
-      <height>251</height>
+      <height>231</height>
      </rect>
     </property>
     <property name="title">
@@ -195,9 +195,9 @@
    <widget class="QGroupBox" name="probeConfiguration">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>20</y>
-      <width>281</width>
+      <x>20</x>
+      <y>260</y>
+      <width>301</width>
       <height>131</height>
      </rect>
     </property>
@@ -309,9 +309,9 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>160</y>
+      <y>260</y>
       <width>281</width>
-      <height>111</height>
+      <height>131</height>
      </rect>
     </property>
     <property name="title">
@@ -391,13 +391,149 @@
      </property>
     </widget>
    </widget>
+   <widget class="QGroupBox" name="SerialPortManager">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>301</width>
+      <height>231</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Serial port manager</string>
+    </property>
+    <widget class="QPushButton" name="DisconnectButton">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>30</y>
+       <width>81</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Disconect</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ConnectButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>81</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Connect</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ConfigureButton">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>30</y>
+       <width>81</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Configure</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="portStatusLablel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>101</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>14</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Port Status:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="portStatusShowLablel">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>90</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>14</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="port">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>130</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>14</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Port Number:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="portNumberShowLablel">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>130</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>14</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>631</width>
+     <width>643</width>
      <height>21</height>
     </rect>
    </property>
