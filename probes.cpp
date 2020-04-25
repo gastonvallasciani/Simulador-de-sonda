@@ -94,12 +94,12 @@ probeError_t probes::getErrorStatus(void)
     return(errorStatus);
 }
 
-int probes::getProbeLength()
+int probes::getProbeLength(void)
 {
     return(probeLength);
 }
 
-probeType_t probes::getProbeType()
+probeType_t probes::getProbeType(void)
 {
     return(probeType);
 }
@@ -109,7 +109,7 @@ int probes::getProbeId()
     return(id);
 }
 
-probeBrand_t probes::getProbeBrand()
+probeBrand_t probes::getProbeBrand(void)
 {
     return(probeBrand);
 }

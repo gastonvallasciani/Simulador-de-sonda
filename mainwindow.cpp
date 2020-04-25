@@ -1,17 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "settingsdialog.h"
-#include "probes.h"
-
 
 #include <QString>
 #include <QMessageBox>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       m_settings(new SettingsDialog),
-      m_serial(new QSerialPort(this))
+      m_serial(new QSerialPort(this)),
+      probe(new probes(0,0,0,NO_ERROR,1000,WIRED,1,GENERIC)),
+      protocolGeneric1(new protocolGeneric(PARSE_P, 1))
 {
     ui->setupUi(this);
 
@@ -55,8 +56,6 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     ui->portStatusShowLablel->setText("<font color='red'>Disconnected</font>");
-
-    initProbe();
 
     connect(m_serial, &QSerialPort::errorOccurred, this, &MainWindow::handleError);
     connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
@@ -167,6 +166,7 @@ void MainWindow::on_typeSlave_clicked()
 void MainWindow::on_id_currentIndexChanged(int index)
 {
     probe->setProbeId(index);
+    protocolGeneric1->setActiveId(index);
 }
 
 void MainWindow::on_ConnectButton_clicked()
@@ -208,7 +208,6 @@ void MainWindow::on_DisconnectButton_clicked()
 void MainWindow::on_ConfigureButton_clicked()
 {
     m_settings->show();
-    //ui->ConfigureButton->setEnabled(false);
 }
 
 void MainWindow::writeData(const QByteArray &data)
@@ -218,7 +217,17 @@ void MainWindow::writeData(const QByteArray &data)
 
 void MainWindow::readData()
 {
-    const QByteArray data = m_serial->readAll();
+   int status = 0;
+
+   const QByteArray dataReceived = m_serial->readAll();
+
+   qDebug() << dataReceived;
+
+   status = protocolGeneric1->parseReceivedData(dataReceived);
+   if(status == 1)
+   {
+       m_serial->write("PARSEO CORRECTO, FUCNIONA LA COMUNICACION!!!");
+   }
 }
 
 void MainWindow::handleError(QSerialPort::SerialPortError error)
@@ -227,31 +236,4 @@ void MainWindow::handleError(QSerialPort::SerialPortError error)
         QMessageBox::critical(this, tr("Critical Error"), m_serial->errorString());
         on_DisconnectButton_clicked();
     }
-}
-
-void MainWindow::initProbe(void)
-{
-    // Inicializo nivel de producto de sonda
-    probe->setProductLevel(0);
-
-    // Inicializo nivel de agua de sonda
-    probe->setWaterLevel(0);
-
-    // Inicializo temperatura de sonda
-    probe->setTemperature(15);
-
-    // Inicializo longitud de sonda
-    probe->setProbeLength(1000);
-
-    // Inicializo estado de error de sonda
-    probe->setErrorStatus(NO_ERROR);
-
-    // Inicializo el tipo de sonda como MASTER
-    probe->setProbeType(WIRED);
-
-    // Inicializo el id de sonda
-    probe->setProbeId(1);
-
-    // Inicializo la marca de la sonda
-    probe->setProbeBrand(GENERIC);
 }

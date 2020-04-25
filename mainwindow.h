@@ -5,6 +5,7 @@
 #include <QSerialPort>
 #include "settingsdialog.h"
 #include "probes.h"
+#include  "protocolGeneric.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -50,12 +51,11 @@ private slots:
     void handleError(QSerialPort::SerialPortError error);
 
 private:
-    void initProbe(void);
+    Ui::MainWindow  *ui;
+    SettingsDialog  *m_settings       = nullptr;
+    QSerialPort     *m_serial         = nullptr;
+    probes          *probe            = nullptr;
+    protocolGeneric *protocolGeneric1 = nullptr;
 
-private:
-    Ui::MainWindow *ui;
-    SettingsDialog *m_settings = nullptr;
-    QSerialPort    *m_serial   = nullptr;
-    probes         *probe;
 };
 #endif // MAINWINDOW_H

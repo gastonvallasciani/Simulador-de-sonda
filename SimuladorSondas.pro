@@ -19,11 +19,13 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     probes.cpp \
+    protocolGeneric.cpp \
     settingsdialog.cpp
 
 HEADERS += \
     mainwindow.h \
     probes.h \
+    protocolGeneric.h \
     settingsdialog.h
 
 FORMS += \
