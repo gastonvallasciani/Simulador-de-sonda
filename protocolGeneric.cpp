@@ -49,8 +49,10 @@ int protocolGeneric::getActiveId(void)
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
 // Metodos
-int protocolGeneric::parseReceivedData(QByteArray dataReceived)
+parseRta_t protocolGeneric::parseReceivedData(QByteArray dataReceived)
 {
+    bool ok;
+
     switch(parseActualState)
     {
         case PARSE_P:
@@ -67,6 +69,7 @@ int protocolGeneric::parseReceivedData(QByteArray dataReceived)
         else
         {
             parseActualState = PARSE_P;
+            return(PARSE_INCOMPLETE);
         }
         break;
         case PARSE_0:
@@ -77,6 +80,8 @@ int protocolGeneric::parseReceivedData(QByteArray dataReceived)
         else
         {
             parseActualState = PARSE_P;
+            return(PARSE_INCOMPLETE);
+
         }
         break;
         case PARSE_01:
@@ -87,6 +92,7 @@ int protocolGeneric::parseReceivedData(QByteArray dataReceived)
         else
         {
             parseActualState = PARSE_P;
+            return(PARSE_INCOMPLETE);
         }
         break;
 
@@ -94,20 +100,27 @@ int protocolGeneric::parseReceivedData(QByteArray dataReceived)
         case PARSE_ID1:
             IdReceived = dataReceived;
             parseActualState = PARSE_ID2;
+            if((IdReceived.toInt(&ok) != 0) && ((IdReceived.toInt(&ok) != 1)))
+            {
+                parseActualState = PARSE_P;
+                return(PARSE_INCOMPLETE);
+            }
         break;
         case PARSE_ID2:
             IdReceived.insert(1,dataReceived);
-            // Falta convertir la variable activeId de int a string para poder compararla con el id recibido
-            // y luego devolver un 1 para enviar la respuesta del mensaje de la sonda.
-            // La respuesta por serial esta probada y funciona bien.
- //           if(IdReceived == activeId)
- //           {
- //               return(1);
- //           }
+
             parseActualState = PARSE_P;
+            if(IdReceived.toInt(&ok) == activeId)
+            {
+               return(PARSE_CORRECT);
+            }
+            else
+            {
+               return(PROBE_ID_INCORRECT);
+            }
         break;
     }
-    return(0);
+    return(PARSING);
 }
 
 

@@ -15,6 +15,14 @@ typedef enum
     PARSE_ID2
 }parseState_t;
 
+typedef enum
+{
+    PARSE_INCOMPLETE,
+    PARSE_CORRECT,
+    PARSING,
+    PROBE_ID_INCORRECT
+}parseRta_t;
+
 
 class protocolGeneric
 {
@@ -37,7 +45,7 @@ public:
     parseState_t getParseActualState(void);
     int getActiveId(void);
     // Metodos
-    int parseReceivedData(QByteArray dataReceived);
+    parseRta_t parseReceivedData(QByteArray dataReceived);
 };
 
 #endif // PROTOCOL_GENERIC_H

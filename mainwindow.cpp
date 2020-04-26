@@ -165,8 +165,8 @@ void MainWindow::on_typeSlave_clicked()
 
 void MainWindow::on_id_currentIndexChanged(int index)
 {
-    probe->setProbeId(index);
-    protocolGeneric1->setActiveId(index);
+    probe->setProbeId(index+1);
+    protocolGeneric1->setActiveId(index+1);
 }
 
 void MainWindow::on_ConnectButton_clicked()
@@ -217,16 +217,32 @@ void MainWindow::writeData(const QByteArray &data)
 
 void MainWindow::readData()
 {
-   int status = 0;
+   int parseStatus = 0;
+   QMessageBox msgBox;
+
 
    const QByteArray dataReceived = m_serial->readAll();
 
    qDebug() << dataReceived;
 
-   status = protocolGeneric1->parseReceivedData(dataReceived);
-   if(status == 1)
+   parseStatus = protocolGeneric1->parseReceivedData(dataReceived);
+   if(parseStatus == PARSE_CORRECT)
    {
        m_serial->write("PARSEO CORRECTO, FUCNIONA LA COMUNICACION!!!");
+   }
+   else if(parseStatus == PARSE_INCOMPLETE)
+   {
+       msgBox.setWindowTitle("Warning");
+       msgBox.setFixedSize(500,500);
+       msgBox.setText("Parse Error");
+       msgBox.exec();
+   }
+   else if(parseStatus == PROBE_ID_INCORRECT)
+   {
+       msgBox.setWindowTitle("Warning");
+       msgBox.setFixedSize(200,200);
+       msgBox.setText("Probe Id Incorrect");
+       msgBox.exec();
    }
 }
 
