@@ -123,4 +123,10 @@ parseRta_t protocolGeneric::parseReceivedData(QByteArray dataReceived)
     return(PARSING);
 }
 
+QByteArray protocolGeneric::costructRtaMessage(probes actualProbe)
+{
+    this->rtaMessage = QString("ID=%1|PROD=%2|WATER=%3|TEMP=%4|ERROR=%5").arg(actualProbe.getProbeId()).arg(actualProbe.getProductLevel()).arg(actualProbe.getWaterLevel()).arg(actualProbe.getTemperature()).arg(actualProbe.getErrorStatus());
+    return(this->rtaMessage.toUtf8());
+}
+
 

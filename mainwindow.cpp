@@ -217,9 +217,9 @@ void MainWindow::writeData(const QByteArray &data)
 
 void MainWindow::readData()
 {
-   int parseStatus = 0;
+   int parseStatus;
    QMessageBox msgBox;
-
+   QByteArray data;
 
    const QByteArray dataReceived = m_serial->readAll();
 
@@ -228,19 +228,18 @@ void MainWindow::readData()
    parseStatus = protocolGeneric1->parseReceivedData(dataReceived);
    if(parseStatus == PARSE_CORRECT)
    {
-       m_serial->write("PARSEO CORRECTO, FUCNIONA LA COMUNICACION!!!");
+       data = protocolGeneric1->costructRtaMessage(*probe);
+       m_serial->write(data);
    }
    else if(parseStatus == PARSE_INCOMPLETE)
    {
        msgBox.setWindowTitle("Warning");
-       msgBox.setFixedSize(500,500);
        msgBox.setText("Parse Error");
        msgBox.exec();
    }
    else if(parseStatus == PROBE_ID_INCORRECT)
    {
        msgBox.setWindowTitle("Warning");
-       msgBox.setFixedSize(200,200);
        msgBox.setText("Probe Id Incorrect");
        msgBox.exec();
    }

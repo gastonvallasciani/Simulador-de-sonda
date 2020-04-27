@@ -1,6 +1,8 @@
 #ifndef PROTOCOL_GENERIC_H
 #define PROTOCOL_GENERIC_H
 
+#include "probes.h"
+
 #include <QString>
 
 #define MAX_CAN_ACTIVE_ID 18
@@ -31,6 +33,7 @@ private:
     parseState_t  parseActualState;
     QByteArray    IdReceived;
     int           activeId;
+    QString       rtaMessage;
 
     //Metodos
 public:
@@ -46,6 +49,7 @@ public:
     int getActiveId(void);
     // Metodos
     parseRta_t parseReceivedData(QByteArray dataReceived);
+    QByteArray costructRtaMessage(probes actualProbe);
 };
 
 #endif // PROTOCOL_GENERIC_H
